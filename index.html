@@ -595,6 +595,77 @@
             margin-bottom: 3rem;
         }
 
+        /* Application Form Styles */
+        .vc-form {
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: left;
+            background: rgba(10, 10, 10, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            color: var(--grey-light);
+            font-size: 0.85rem;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-label span {
+            color: var(--accent);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            outline: none;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--accent);
+            background: rgba(204, 255, 0, 0.02);
+            box-shadow: 0 0 15px rgba(204, 255, 0, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        select.form-select option {
+            background: var(--primary-light);
+            color: var(--white);
+            padding: 10px;
+        }
+
         /* Philosophy Section */
         .philosophy {
             background: var(--primary-light);
@@ -1915,16 +1986,87 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-content">
+    <section class="contact" id="contact" style="padding: 8rem 5%; background: var(--primary);">
+        <div class="contact-content" style="max-width: 800px; margin: 0 auto; text-align: center;">
             <h2 class="section-title reveal">Let's Build the Future</h2>
-            <p class="contact-text reveal">
-                If you're creating something that shouldn't exist yet, we want to meet you.
+            <p class="section-subtitle reveal" style="margin-bottom: 1rem;">
+                Welcome to Zenith Capital—the premier venture capital firm backing the next generation of Web3 and Deep
+                Tech infrastructure. We provide strategic funding, elite advisory, and deep liquidity to accelerate
+                visionary founders.
             </p>
-            <a href="mailto:jonathanwei@zenith-capital.partners" class="contact-email reveal"
-                style="font-family: monospace; letter-spacing: 1px; color: var(--accent); opacity: 0.8; transition: opacity 0.3s ease;">
-                [email protected]
-            </a>
+            <p class="section-subtitle reveal"
+                style="font-size: 0.95rem; margin-bottom: 3rem; color: var(--grey-light);">
+                By submitting this application, you are taking the first step toward securing institutional backing.
+                Complete the application below, and our investment committee will review your core architecture.
+            </p>
+
+            <form class="vc-form reveal"
+                onsubmit="event.preventDefault(); alert('Application Submitted Successfully!');">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name <span>*</span></label>
+                        <input type="text" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name <span>*</span></label>
+                        <input type="text" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Email <span>*</span></label>
+                        <input type="email" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Project / Company Name <span>*</span></label>
+                        <input type="text" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Funding Stage <span>*</span></label>
+                        <select class="form-select" required>
+                            <option value="" disabled selected>Please Select</option>
+                            <option value="preseed">Pre-Seed</option>
+                            <option value="seed">Seed</option>
+                            <option value="seriesa">Series A</option>
+                            <option value="strategic">Strategic Round</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Primary Sector <span>*</span></label>
+                        <select class="form-select" required>
+                            <option value="" disabled selected>Please Select</option>
+                            <option value="l1l2">Layer 1 / Layer 2 / zkVM</option>
+                            <option value="compute">AI Compute / DePIN</option>
+                            <option value="defi">DeFi / Liquidity</option>
+                            <option value="gaming">Web3 Gaming</option>
+                            <option value="other">Other Deep Tech</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Additional Details / Pitch Deck Link</label>
+                        <textarea class="form-textarea"
+                            placeholder="Paste deck link or summarize architecture..."></textarea>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary"
+                        style="padding: 1.2rem 3rem; font-size: 1.05rem;">Submit Application</button>
+                </div>
+            </form>
         </div>
     </section>
 
