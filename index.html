@@ -238,6 +238,31 @@
             color: var(--white);
         }
 
+        /* Hero Video Background */
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: 0;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(5,5,5,0.7) 0%, var(--primary) 100%);
+            z-index: 1;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -365,7 +390,7 @@
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             text-align: center;
             max-width: 1000px;
             padding: 0 2rem;
@@ -1289,8 +1314,14 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <!-- Background Video -->
+        <video class="hero-video" autoPlay loop muted playsInline>
+            <source src="zenith-brand.mov" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+
         <!-- Animated Grid Background -->
-        <div class="grid-background" id="gridBg"></div>
+        <div class="grid-background" id="gridBg" style="z-index: 1;"></div>
 
         <!-- Floating Orbs -->
         <div class="orb orb1"></div>
@@ -1419,23 +1450,7 @@
     </section>
 
 
-    <!-- Brand Video Section -->
-    <section class="brand-video" style="background: var(--primary); padding: 5rem 5%;">
-        <div class="container text-center">
-            <span class="section-label reveal">The Convergence</span>
-            <h2 class="section-title reveal">Where Intelligence Meets Capital</h2>
-            <div class="video-wrapper reveal"
-                style="max-width: 1000px; margin: 3rem auto 0; position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 0 50px rgba(0,255,102,0.15); border: 1px solid rgba(0,255,102,0.2);">
-                <video id="zenith-brand-video" width="100%" autoPlay loop muted playsInline style="display: block;">
-                    <source src="zenith-brand.mov" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div
-                    style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(5,5,5,0.9) 100%); pointer-events: none;">
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Approach Section -->
     <section class="approach" id="approach">
