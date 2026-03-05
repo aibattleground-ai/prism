@@ -1308,30 +1308,53 @@
         }
 
         @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.3; }
-            50% { transform: scale(1.05); opacity: 0.7; }
-            100% { transform: scale(0.95); opacity: 0.3; }
+            0% {
+                transform: scale(0.95);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0.3;
+            }
         }
 
         /* ── Managing Partners ── */
         .team {
             background: var(--primary-light);
         }
+
         .partners-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2.5rem;
             margin-top: 4rem;
         }
-        @media (max-width: 768px) { .partners-grid { grid-template-columns: 1fr; } }
+
+        @media (max-width: 768px) {
+            .partners-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .partner-card {
             background: var(--primary);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             padding: 3rem 2.5rem;
             display: flex;
             flex-direction: column;
@@ -1340,16 +1363,18 @@
             text-align: center;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
+
         .partner-card:hover {
-            border-color: rgba(204,255,0,0.3);
-            box-shadow: 0 0 40px rgba(204,255,0,0.06);
+            border-color: rgba(204, 255, 0, 0.3);
+            box-shadow: 0 0 40px rgba(204, 255, 0, 0.06);
         }
+
         .partner-avatar {
             width: 110px;
             height: 110px;
             border-radius: 50%;
             background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
-            border: 2px solid rgba(255,255,255,0.12);
+            border: 2px solid rgba(255, 255, 255, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1357,11 +1382,13 @@
             position: relative;
             filter: grayscale(1);
         }
+
         .partner-avatar svg {
             width: 56px;
             height: 56px;
             opacity: 0.35;
         }
+
         .partner-name {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.4rem;
@@ -1369,19 +1396,22 @@
             color: var(--white);
             letter-spacing: -0.5px;
         }
+
         .partner-creds {
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
         }
+
         .partner-cred {
             font-size: 0.82rem;
             color: var(--grey);
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             padding: 0.35rem 0.9rem;
             letter-spacing: 0.3px;
         }
+
         .partner-linkedin {
             display: inline-flex;
             align-items: center;
@@ -1394,32 +1424,49 @@
             transition: color 0.3s ease;
             margin-top: 0.5rem;
         }
-        .partner-linkedin:hover { color: var(--accent); }
-        .partner-linkedin svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        .partner-linkedin:hover {
+            color: var(--accent);
+        }
+
+        .partner-linkedin svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
 
         /* ── Research & Insights ── */
         .research {
             background: var(--primary);
         }
+
         .research-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-top: 4rem;
         }
-        @media (max-width: 1024px) { .research-grid { grid-template-columns: 1fr; } }
+
+        @media (max-width: 1024px) {
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .research-card {
             background: var(--primary-light);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             display: flex;
             flex-direction: column;
             transition: border-color 0.3s ease, transform 0.3s ease;
             overflow: hidden;
         }
+
         .research-card:hover {
-            border-color: rgba(204,255,0,0.25);
+            border-color: rgba(204, 255, 0, 0.25);
             transform: translateY(-6px);
         }
+
         .research-thumb {
             width: 100%;
             height: 160px;
@@ -1430,23 +1477,24 @@
             position: relative;
             overflow: hidden;
         }
+
         .research-thumb::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 8px,
-                rgba(204,255,0,0.03) 8px,
-                rgba(204,255,0,0.03) 9px
-            );
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 8px,
+                    rgba(204, 255, 0, 0.03) 8px,
+                    rgba(204, 255, 0, 0.03) 9px);
         }
+
         .research-thumb-icon {
             width: 44px;
             height: 44px;
             opacity: 0.3;
         }
+
         .research-body {
             padding: 2rem;
             flex: 1;
@@ -1454,12 +1502,14 @@
             flex-direction: column;
             gap: 1rem;
         }
+
         .research-date {
             font-size: 0.78rem;
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
+
         .research-title {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1rem;
@@ -1468,18 +1518,20 @@
             line-height: 1.5;
             flex: 1;
         }
+
         .research-summary {
             font-size: 0.88rem;
             color: var(--grey);
             line-height: 1.7;
         }
+
         .research-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             margin-top: 1.5rem;
             padding: 0.7rem 1.4rem;
-            border: 1px solid rgba(204,255,0,0.4);
+            border: 1px solid rgba(204, 255, 0, 0.4);
             color: var(--accent);
             font-size: 0.82rem;
             text-transform: uppercase;
@@ -1488,34 +1540,43 @@
             transition: background 0.3s ease, color 0.3s ease;
             width: fit-content;
         }
+
         .research-btn:hover {
             background: var(--accent);
             color: #050505;
         }
-        .research-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+        .research-btn svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
 
         /* ── Contact Form Upgrade ── */
         .contact-disclaimer {
             font-size: 0.8rem;
             color: var(--grey);
-            border: 1px solid rgba(255,255,255,0.07);
-            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.02);
             padding: 0.8rem 1.2rem;
             margin-bottom: 2.5rem;
             line-height: 1.6;
             font-style: italic;
             text-align: left;
         }
+
         .contact-disclaimer::before {
             content: '⚠ ';
             color: var(--accent);
             font-style: normal;
         }
+
         .inline-form {
             text-align: left;
             max-width: 700px;
             margin: 0 auto;
         }
+
         .form-submit-btn {
             background: var(--accent);
             color: #050505;
@@ -1532,6 +1593,7 @@
             width: 100%;
             margin-top: 1rem;
         }
+
         .form-submit-btn:hover {
             background: #e6ff66;
             transform: translateY(-2px);
@@ -1540,16 +1602,17 @@
         /* ── Footer Upgrade ── */
         .footer-address {
             font-size: 0.82rem;
-            color: rgba(255,255,255,0.35);
+            color: rgba(255, 255, 255, 0.35);
             margin-top: 0.5rem;
             line-height: 1.6;
         }
+
         .footer-legal {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
             font-size: 0.72rem;
-            color: rgba(255,255,255,0.2);
+            color: rgba(255, 255, 255, 0.2);
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
@@ -1859,60 +1922,80 @@
                 <span class="section-label reveal">Research & Insights</span>
                 <h2 class="section-title reveal">Deep-Tech Reports</h2>
                 <p class="section-subtitle reveal" style="margin-left:auto;margin-right:auto;">
-                    Proprietary research from our technical partners—covering protocol infrastructure, MEV dynamics, and next-generation cryptography.
+                    Proprietary research from our technical partners—covering protocol infrastructure, MEV dynamics, and
+                    next-generation cryptography.
                 </p>
             </div>
             <div class="research-grid">
                 <!-- Paper 1 -->
                 <div class="research-card reveal">
                     <div class="research-thumb">
-                        <svg class="research-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="#CCFF00" stroke-width="1.2">
-                            <path d="M12 2l9 4.5v9L12 20l-9-4.5v-9L12 2z"/>
-                            <path d="M12 2v18M3 6.5l9 4.5 9-4.5"/>
+                        <svg class="research-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="#CCFF00"
+                            stroke-width="1.2">
+                            <path d="M12 2l9 4.5v9L12 20l-9-4.5v-9L12 2z" />
+                            <path d="M12 2v18M3 6.5l9 4.5 9-4.5" />
                         </svg>
                     </div>
                     <div class="research-body">
                         <div class="research-date">Feb 2026 — Technical Paper</div>
-                        <div class="research-title">The Architecture of Deterministic Destiny Engines: Analyzing OracleEyes' On-Chain Consensus</div>
-                        <div class="research-summary">An in-depth analysis of OracleEyes' novel consensus model for probabilistic outcome finalization, exploring the cryptoeconomic guarantees and fault-tolerance thresholds of its oracle network.</div>
-                        <a href="#" class="research-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/></svg>
-                            Read Paper (PDF)
+                        <div class="research-title">The Architecture of Deterministic Destiny Engines: Analyzing
+                            OracleEyes' On-Chain Consensus</div>
+                        <div class="research-summary">An in-depth analysis of OracleEyes' novel consensus model for
+                            probabilistic outcome finalization, exploring the cryptoeconomic guarantees and
+                            fault-tolerance thresholds of its oracle network.</div>
+                        <a href="research-1.html" target="_blank" class="research-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 3v4a1 1 0 001 1h4" />
+                                <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" />
+                            </svg>
+                            READ PAPER
                         </a>
                     </div>
                 </div>
                 <!-- Paper 2 -->
                 <div class="research-card reveal">
                     <div class="research-thumb">
-                        <svg class="research-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="#CCFF00" stroke-width="1.2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        <svg class="research-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="#CCFF00"
+                            stroke-width="1.2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                         </svg>
                     </div>
                     <div class="research-body">
                         <div class="research-date">Jan 2026 — Market Research</div>
                         <div class="research-title">State of Deep Liquidity: MEV Mitigation in L2 Orderbooks</div>
-                        <div class="research-summary">A comprehensive survey of maximal extractable value vectors on leading Layer-2 sequencer architectures, with proposed mitigations via private mempools and commit-reveal schemes.</div>
-                        <a href="#" class="research-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/></svg>
-                            Read Paper (PDF)
+                        <div class="research-summary">A comprehensive survey of maximal extractable value vectors on
+                            leading Layer-2 sequencer architectures, with proposed mitigations via private mempools and
+                            commit-reveal schemes.</div>
+                        <a href="research-2.html" target="_blank" class="research-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 3v4a1 1 0 001 1h4" />
+                                <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" />
+                            </svg>
+                            READ PAPER
                         </a>
                     </div>
                 </div>
                 <!-- Paper 3 -->
                 <div class="research-card reveal">
                     <div class="research-thumb">
-                        <svg class="research-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="#CCFF00" stroke-width="1.2">
-                            <rect x="2" y="3" width="20" height="14" rx="2"/>
-                            <path d="M8 21h8M12 17v4"/>
+                        <svg class="research-thumb-icon" viewBox="0 0 24 24" fill="none" stroke="#CCFF00"
+                            stroke-width="1.2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <path d="M8 21h8M12 17v4" />
                         </svg>
                     </div>
                     <div class="research-body">
                         <div class="research-date">Dec 2025 — Hardware Brief</div>
                         <div class="research-title">Beyond Rollups: Next-Gen ZK-Hardware Acceleration</div>
-                        <div class="research-summary">Examining the frontier of custom ASIC and FPGA accelerators purpose-built for ZK proof generation—benchmarking proving time reductions of up to 40× over CPU-based systems.</div>
-                        <a href="#" class="research-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/></svg>
-                            Read Paper (PDF)
+                        <div class="research-summary">Examining the frontier of custom ASIC and FPGA accelerators
+                            purpose-built for ZK proof generation—benchmarking proving time reductions of up to 40× over
+                            CPU-based systems.</div>
+                        <a href="research-3.html" target="_blank" class="research-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 3v4a1 1 0 001 1h4" />
+                                <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" />
+                            </svg>
+                            READ PAPER
                         </a>
                     </div>
                 </div>
@@ -2102,7 +2185,8 @@
                 <span class="section-label reveal">Leadership</span>
                 <h2 class="section-title reveal">Managing Partners</h2>
                 <p class="section-subtitle reveal" style="margin-left:auto;margin-right:auto;">
-                    Deep-tech practitioners with institutional pedigrees—built in the trenches of algorithmic trading, protocol security, and cryptographic engineering.
+                    Deep-tech practitioners with institutional pedigrees—built in the trenches of algorithmic trading,
+                    protocol security, and cryptographic engineering.
                 </p>
             </div>
             <div class="partners-grid">
@@ -2110,8 +2194,8 @@
                 <div class="partner-card reveal">
                     <div class="partner-avatar">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <circle cx="12" cy="8" r="4"/>
-                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                         </svg>
                     </div>
                     <div class="partner-name">Alexander Vance</div>
@@ -2120,7 +2204,10 @@
                         <span class="partner-cred">DeFi Protocol Architect</span>
                     </div>
                     <a href="#" class="partner-linkedin" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
+                        </svg>
                         LinkedIn
                     </a>
                 </div>
@@ -2128,8 +2215,8 @@
                 <div class="partner-card reveal">
                     <div class="partner-avatar">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <circle cx="12" cy="8" r="4"/>
-                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                         </svg>
                     </div>
                     <div class="partner-name">Julian Hayes</div>
@@ -2138,7 +2225,10 @@
                         <span class="partner-cred">Zero-Knowledge Proof Engineer</span>
                     </div>
                     <a href="#" class="partner-linkedin" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
+                        </svg>
                         LinkedIn
                     </a>
                 </div>
@@ -2332,7 +2422,8 @@
         <div style="max-width: 800px; margin: 0 auto; text-align: center;">
             <h2 class="section-title reveal">Private Application</h2>
             <p class="section-subtitle reveal" style="margin-left:auto;margin-right:auto;margin-bottom:3rem;">
-                Zenith Capital accepts a small number of new protocols each quarter. Our investment committee conducts full technical due diligence before any engagement.
+                Zenith Capital accepts a small number of new protocols each quarter. Our investment committee conducts
+                full technical due diligence before any engagement.
             </p>
 
             <!-- Inline Application Form -->
@@ -2392,7 +2483,8 @@
 
                     <div class="form-group" style="margin-bottom:2rem;">
                         <label class="form-label" for="cf-details">Additional Details</label>
-                        <textarea class="form-textarea" id="cf-details" placeholder="Describe your protocol architecture, current traction, and what you are looking for from Zenith Capital..."></textarea>
+                        <textarea class="form-textarea" id="cf-details"
+                            placeholder="Describe your protocol architecture, current traction, and what you are looking for from Zenith Capital..."></textarea>
                     </div>
 
                     <button type="submit" class="form-submit-btn">Submit Application →</button>
@@ -2421,7 +2513,13 @@
             <div class="footer-copy">© 2026 Zenith Capital</div>
         </div>
         <div class="footer-legal">
-            Not an offer to sell securities. Zenith Capital is a private investment fund registered in Singapore and does not solicit investments from the general public. Information presented on this website is for informational purposes only and does not constitute investment advice, a solicitation, or an offer to buy or sell any financial instrument. Past performance is not indicative of future results. All investment activities carry risk, including the possible loss of principal. Prospective investors should conduct their own due diligence and consult independent legal and financial advisors before making any investment decisions.
+            Not an offer to sell securities. Zenith Capital is a private investment fund registered in Singapore and
+            does not solicit investments from the general public. Information presented on this website is for
+            informational purposes only and does not constitute investment advice, a solicitation, or an offer to buy or
+            sell any financial instrument. Past performance is not indicative of future results. All investment
+            activities carry risk, including the possible loss of principal. Prospective investors should conduct their
+            own due diligence and consult independent legal and financial advisors before making any investment
+            decisions.
         </div>
     </footer>
 

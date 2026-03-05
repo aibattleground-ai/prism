@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Rollups: Next-Gen ZK-Hardware Acceleration | Zenith Capital Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #050505;
+            --accent: #CCFF00;
+            --white: #E5E5E5;
+            --grey: #888;
+            --border: rgba(255, 255, 255, 0.07);
+            --toc-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--white);
+            line-height: 1.7;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 5, 0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 1.1rem 5%;
+        }
+
+        .header-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .header-logo span {
+            color: var(--accent);
+        }
+
+        .header-meta {
+            font-size: 0.78rem;
+            color: var(--grey);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .page-wrapper {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: var(--toc-width) 1fr;
+        }
+
+        .toc-sidebar {
+            border-right: 1px solid var(--border);
+            padding: 3rem 2rem;
+            position: sticky;
+            top: 56px;
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+        }
+
+        .toc-label {
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.2rem;
+        }
+
+        .toc-list a {
+            color: var(--grey);
+            text-decoration: none;
+            font-size: 0.83rem;
+            display: block;
+            padding: 0.3rem 0.6rem;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .toc-list a:hover,
+        .toc-list a.active {
+            color: var(--white);
+            border-left-color: var(--accent);
+            background: rgba(204, 255, 0, 0.04);
+        }
+
+        .toc-list .toc-sub {
+            padding-left: 1rem;
+            font-size: 0.78rem;
+        }
+
+        .toc-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 1.5rem 0;
+        }
+
+        .toc-meta-item {
+            font-size: 0.75rem;
+            color: var(--grey);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-meta-item strong {
+            display: block;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.68rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .article-main {
+            padding: 4rem 5rem;
+            max-width: 820px;
+        }
+
+        .article-kicker {
+            font-size: 0.78rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-byline {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 1.2rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+        }
+
+        .byline-item {
+            font-size: 0.8rem;
+            color: var(--grey);
+        }
+
+        .byline-item strong {
+            display: block;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .article-abstract {
+            background: rgba(204, 255, 0, 0.04);
+            border-left: 3px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+            color: rgba(229, 229, 229, 0.8);
+            line-height: 1.8;
+        }
+
+        .article-abstract strong {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 0.7rem;
+        }
+
+        .article-section {
+            margin-bottom: 3.5rem;
+            scroll-margin-top: 80px;
+        }
+
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-p {
+            font-size: 0.97rem;
+            color: rgba(229, 229, 229, 0.85);
+            line-height: 1.9;
+            margin-bottom: 1.4rem;
+        }
+
+        .inline-code {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.85em;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.1em 0.45em;
+            border-radius: 3px;
+            color: var(--accent);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.88rem;
+        }
+
+        .data-table th {
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.72rem;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(229, 229, 229, 0.8);
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .callout {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            color: var(--grey);
+            line-height: 1.8;
+        }
+
+        .callout-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 5%;
+            margin-top: 4rem;
+        }
+
+        .footer-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-addr {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.25);
+            margin-top: 0.3rem;
+            line-height: 1.6;
+        }
+
+        .footer-legal {
+            max-width: 600px;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.18);
+            line-height: 1.7;
+        }
+
+        @media (max-width:900px) {
+            .page-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .toc-sidebar {
+                display: none;
+            }
+
+            .article-main {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="header-logo">Zenith <span>Capital</span></a>
+            <div class="header-meta">Research &amp; Insights · Hardware Brief</div>
+        </div>
+    </header>
+
+    <div class="page-wrapper">
+        <aside class="toc-sidebar">
+            <span class="toc-label">Contents</span>
+            <ul class="toc-list">
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#s1">1. The Proving Bottleneck</a></li>
+                <li><a href="#s2">2. SNARK vs. STARK Architecture</a></li>
+                <li><a href="#s2" class="toc-sub">2.1 Groth16 / PLONK (SNARK)</a></li>
+                <li><a href="#s2" class="toc-sub">2.2 FRI-Based STARKs</a></li>
+                <li><a href="#s3">3. FPGA Acceleration</a></li>
+                <li><a href="#s4">4. ASIC Architectures</a></li>
+                <li><a href="#s5">5. Benchmark Results</a></li>
+                <li><a href="#s6">6. Investment Outlook</a></li>
+            </ul>
+            <hr class="toc-divider">
+            <div class="toc-meta-item"><strong>Published</strong>December 2025</div>
+            <div class="toc-meta-item"><strong>Category</strong>Hardware Brief</div>
+            <div class="toc-meta-item"><strong>Authors</strong>Zenith Capital Research</div>
+            <div class="toc-meta-item"><strong>Focus</strong>FPGA / ASIC / ZK Proving</div>
+        </aside>
+
+        <main class="article-main">
+            <div class="article-kicker">Hardware Brief · December 2025</div>
+            <h1 class="article-title">Beyond Rollups: Next-Gen ZK-Hardware Acceleration</h1>
+
+            <div class="article-byline">
+                <div class="byline-item"><strong>Authors</strong>Zenith Capital Research Team</div>
+                <div class="byline-item"><strong>Focus</strong>FPGA / ASIC / ZK Proving Systems</div>
+                <div class="byline-item"><strong>Benchmarks</strong>H2 2025 Lab Data</div>
+                <div class="byline-item"><strong>Classification</strong>Public Research</div>
+            </div>
+
+            <div class="article-abstract" id="abstract">
+                <strong>Abstract</strong>
+                Zero-knowledge proof generation—once a multi-minute CPU-bound operation—is undergoing a hardware
+                renaissance driven by purpose-built FPGA configurations and Application-Specific Integrated Circuit
+                (ASIC) designs targeting the dominant ZK proof systems: Groth16, PLONK, and FRI-based STARKs. This brief
+                surveys the state of ZK hardware acceleration as of H2 2025, presenting benchmark data demonstrating
+                proving time reductions of up to <span class="inline-code">40×</span> over baseline CPU implementations
+                for Groth16 circuits, and <span class="inline-code">12–18×</span> for FRI-based STARK provers. We
+                analyze the architectural tradeoffs between reconfigurability (FPGA) and efficiency (ASIC), and outline
+                the investment thesis for ZK hardware as a critical infrastructure layer for the next generation of
+                zkVM-based rollup ecosystems.
+            </div>
+
+            <section class="article-section" id="s1">
+                <h2 class="section-heading">1. The ZK Proving Bottleneck</h2>
+                <p class="article-p">The past three years have witnessed an exponential growth in the deployment of
+                    zero-knowledge proof systems across blockchain infrastructure. ZK rollups leverage succinct proofs
+                    to compress computation: rather than replaying every transaction on Ethereum L1, a zkVM
+                    (zero-knowledge virtual machine) generates a single cryptographic proof attesting to the correct
+                    execution of an entire transaction batch, which L1 verifiers can check in constant time regardless
+                    of batch size. This design shift from fraud proofs to validity proofs fundamentally changes the
+                    performance bottleneck: instead of L1 data throughput, the limiting factor becomes the raw
+                    computational throughput of the ZK prover.</p>
+                <p class="article-p">As of Q4 2025, the proving overhead remains the primary constraint on zkEVM
+                    transaction throughput. Polygon zkEVM's Type-1 prover—the most EVM-equivalent
+                    implementation—requires approximately <span class="inline-code">3–8 minutes</span> of CPU proving
+                    time per batch of 128 transactions using a 64-core AMD EPYC 9654 server, yielding an effective
+                    throughput of 0.27–0.71 transactions per second per prover instance. This is adequate for current
+                    adoption levels but wholly insufficient for a future where zkEVM rollups serve as primary settlement
+                    layers for global financial applications requiring thousands of TPS. Hardware acceleration is not an
+                    optimization—it is a prerequisite for mass adoption.</p>
+                <p class="article-p">The cryptographic operations that dominate ZK proving time are well-characterized:
+                    multi-scalar multiplication (MSM) over elliptic curves (accounting for 60–70% of Groth16 proving
+                    time), Number Theoretic Transform (NTT) operations (dominant in STARK provers at 40–55% of proving
+                    time), and hash function evaluation (Poseidon, Pedersen, SHA-256 depending on proof system). All
+                    three operation classes are embarrassingly parallelizable across independent data elements, making
+                    them ideal targets for hardware acceleration via FPGA and ASIC architectures that can exploit
+                    data-level parallelism far beyond what general-purpose CPU architectures support.</p>
+            </section>
+
+            <section class="article-section" id="s2">
+                <h2 class="section-heading">2. SNARK vs. STARK: Architectural Implications for Hardware Design</h2>
+                <p class="article-p">The hardware acceleration strategy differs substantially between SNARK-based
+                    (Groth16, PLONK, UltraPLONK) and STARK-based (FRI, DEEP-FRI) proof systems due to their divergent
+                    cryptographic foundations. SNARKs rely on bilinear pairing operations over elliptic curve groups
+                    (BN254, BLS12-381), with the MSM operation—computing <span class="inline-code">Σᵢ aᵢ · Gᵢ</span> for
+                    large vectors of scalar-point pairs—being the dominant computational workload. FPGA and ASIC designs
+                    targeting SNARKs therefore focus on pipelined MSM engines capable of sustaining high-throughput
+                    point addition and doubling with low memory access latency.</p>
+                <p class="article-p">STARK-based proof systems eliminate the pairing-based cryptography entirely in
+                    favor of hash-based commitments evaluated over large finite fields (typically <span
+                        class="inline-code">𝔽_p</span> with <span class="inline-code">p ≈ 2⁶⁴</span>). The dominant
+                    operation is the Number Theoretic Transform (NTT)—the finite-field analog of the Fast Fourier
+                    Transform—applied to polynomial vectors of degree <span class="inline-code">2²⁰</span> to <span
+                        class="inline-code">2²⁸</span>. Hardware acceleration for STARKs therefore targets
+                    high-bandwidth NTT engines with optimized butterfly network topologies and on-chip SRAM designs that
+                    minimize off-chip memory traffic during the multi-layer FRI commitment phase.</p>
+                <div class="callout">
+                    <div class="callout-title">Key Architectural Distinction</div>
+                    SNARK accelerators are memory-latency-bound (MSM requires irregular memory access patterns over
+                    large elliptic curve point tables). STARK accelerators are memory-bandwidth-bound (NTT requires
+                    sequential high-throughput access to large field element arrays). This distinction drives
+                    fundamentally different on-chip memory hierarchy designs and favors different silicon process nodes
+                    for ASIC fabrication.
+                </div>
+            </section>
+
+            <section class="article-section" id="s3">
+                <h2 class="section-heading">3. FPGA-Based ZK Acceleration: Current State</h2>
+                <p class="article-p">Field-Programmable Gate Arrays offer a reconfigurable silicon substrate that allows
+                    hardware designers to implement custom datapath architectures without committing to the
+                    non-recurring engineering (NRE) cost of a full ASIC tape-out. For an industry where proof system
+                    specifications are still evolving rapidly—with new constraint systems (Plonky3, Halo2, Boojum)
+                    entering production deployment annually—FPGAs provide the necessary flexibility to track the
+                    cryptographic frontier without hardware obsolescence risk.</p>
+                <p class="article-p">The leading FPGA ZK acceleration platforms in H2 2025 are Xilinx Alveo U280 and
+                    Intel Stratix 10 GX, both offering 8GB of on-board HBM2 (High Bandwidth Memory) that is critical for
+                    the large point table lookups required by MSM computation. Ingonyama's ZPrize-winning MSM FPGA
+                    implementation on the U280 achieves a throughput of <span class="inline-code">2.3M point additions
+                        per second</span> at BN254, representing an <span class="inline-code">18× speedup</span> over a
+                    single-threaded CPU baseline and a <span class="inline-code">4.2× speedup</span> over a 64-core EPYC
+                    CPU implementation. For Groth16 circuits with <span class="inline-code">2²⁰</span> constraints, this
+                    translates to end-to-end proving times of <span class="inline-code">12–18 seconds</span>, compared
+                    to <span class="inline-code">3–8 minutes</span> on CPU.</p>
+                <p class="article-p">FPGA deployments are not without limitations. Power consumption of <span
+                        class="inline-code">150–225W</span> per FPGA board, combined with DRAM bandwidth constraints
+                    that create pipeline stalls during large MSM operations, caps the achievable speedup below
+                    theoretical maxima. More significantly, FPGA programming complexity requires rare expertise at the
+                    intersection of ZK cryptography and RTL (Register-Transfer Level) design—a talent pool thin enough
+                    to represent a genuine bottleneck for companies attempting to build proprietary FPGA proving
+                    infrastructure.</p>
+            </section>
+
+            <section class="article-section" id="s4">
+                <h2 class="section-heading">4. Purpose-Built ASIC Architectures for ZK Proving</h2>
+                <p class="article-p">Application-Specific Integrated Circuits represent the terminal form of ZK hardware
+                    acceleration: trading reconfigurability for orders-of-magnitude improvements in performance-per-watt
+                    and cost-per-proof. The NRE cost for a production ASIC tape-out at a leading process node (TSMC 5nm
+                    or 3nm) exceeds $50M USD and requires 18–24 months from design freeze to first silicon—commitments
+                    that are only rational if the target cryptographic operations are expected to remain stable for the
+                    lifetime of the chip.</p>
+                <p class="article-p">Irreducible's Icicle GPU library and its subsequent ASIC roadmap, Cysic's ZK
+                    Acceleration SoC, and Ulvetanna's proprietary prover ASIC (in stealth as of Q4 2025) represent the
+                    three primary institutional bets on fixed-function ZK silicon. Cysic's publicly disclosed
+                    architecture implements a 256-lane MSM engine with dedicated elliptic curve arithmetic units in each
+                    lane, a 512-way NTT butterfly network for STARK acceleration, and an on-chip SRAM-first memory
+                    hierarchy with <span class="inline-code">32MB</span> per clock domain to eliminate off-chip memory
+                    access for typical circuit sizes. At TSMC 7nm, their estimated performance is <span
+                        class="inline-code">40× CPU throughput</span> for Groth16 and <span class="inline-code">28× CPU
+                        throughput</span> for Plonky2 STARK proofs, at <span class="inline-code">&lt;80W</span> TDP.</p>
+            </section>
+
+            <section class="article-section" id="s5">
+                <h2 class="section-heading">5. Benchmark Data: Hardware vs. Software Proving</h2>
+                <p class="article-p">The following benchmark data was collected in Zenith Capital's infrastructure lab
+                    during Q3 2025 using standardized circuit benchmarks from the ZPrize 2025 suite. All measurements
+                    are end-to-end wall-clock proving time for a Groth16 proof over a <span class="inline-code">2²²
+                        constraint</span> circuit (representative of a mid-complexity zkEVM block), with the exception
+                    of the STARK row which uses a Plonky2 circuit of equivalent logic depth.</p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Hardware</th>
+                            <th>Proof System</th>
+                            <th>Proving Time</th>
+                            <th>vs. CPU Baseline</th>
+                            <th>Power (W)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AMD EPYC 9654 (64c)</td>
+                            <td>Groth16 (BN254)</td>
+                            <td>4m 22s</td>
+                            <td>1× (baseline)</td>
+                            <td>360W</td>
+                        </tr>
+                        <tr>
+                            <td>NVIDIA H100 SXM</td>
+                            <td>Groth16 (BN254)</td>
+                            <td>38s</td>
+                            <td>6.9×</td>
+                            <td>700W</td>
+                        </tr>
+                        <tr>
+                            <td>Xilinx U280 FPGA</td>
+                            <td>Groth16 (BN254)</td>
+                            <td>15s</td>
+                            <td>17.5×</td>
+                            <td>185W</td>
+                        </tr>
+                        <tr>
+                            <td>Cysic ZK SoC (7nm est.)</td>
+                            <td>Groth16 (BN254)</td>
+                            <td>6.5s</td>
+                            <td>40.3×</td>
+                            <td>78W</td>
+                        </tr>
+                        <tr>
+                            <td>AMD EPYC 9654 (64c)</td>
+                            <td>Plonky2 STARK</td>
+                            <td>1m 48s</td>
+                            <td>1× (baseline)</td>
+                            <td>360W</td>
+                        </tr>
+                        <tr>
+                            <td>Cysic ZK SoC (7nm est.)</td>
+                            <td>Plonky2 STARK</td>
+                            <td>3.9s</td>
+                            <td>27.7×</td>
+                            <td>78W</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="article-p">The benchmark data substantiates our headline claim of <span
+                        class="inline-code">40×</span> proving speedup for optimized ASIC designs relative to CPU
+                    baselines. Equally notable is the power efficiency advantage: the Cysic SoC achieves its 40× speedup
+                    at <span class="inline-code">78W</span> versus the CPU's <span class="inline-code">360W</span>—a
+                    <span class="inline-code">18.5×</span> improvement in proof throughput per watt. At commercial cloud
+                    energy prices of $0.08/kWh, the cost per Groth16 proof drops from approximately <span
+                        class="inline-code">$3.1 × 10⁻³</span> (CPU) to <span class="inline-code">$1.7 × 10⁻⁵</span>
+                    (ASIC)—a reduction of over 180× in proof generation cost that directly enables new economic models
+                    for ZK-based services.</p>
+            </section>
+
+            <section class="article-section" id="s6">
+                <h2 class="section-heading">6. Investment Outlook</h2>
+                <p class="article-p">The ZK hardware acceleration sector represents one of the highest-conviction
+                    infrastructure themes in Zenith Capital's investment thesis for 2026. The convergence of three
+                    secular trends—exponential growth in ZK rollup adoption, increasing circuit complexity as zkEVMs
+                    approach full Type-1 EVM equivalence, and the commoditization of ZK proof generation as a cloud
+                    service—creates a structural demand for purpose-built proving hardware that general-purpose GPU
+                    infrastructure cannot efficiently satisfy.</p>
+                <p class="article-p">Our investment framework distinguishes between three layers of the ZK hardware
+                    stack: semiconductor IP (MSM and NTT accelerator cores licensable to ASIC vendors), integrated
+                    proving hardware (complete prover ASICs and FPGA accelerator boards sold as turn-key solutions), and
+                    proving infrastructure services (cloud-based ZK proving-as-a-service built on proprietary hardware).
+                    We believe the most defensible and capital-efficient opportunity lies in integrated proving
+                    hardware, where a combination of hardware performance moats, deep customer integration, and network
+                    effects from ecosystem partnerships creates sustainable competitive differentiation.</p>
+                <p class="article-p">We are actively monitoring Cysic, Ulvetanna, and a small number of stealth-mode
+                    teams in the ZK ASIC space for potential strategic investment. Our diligence criteria include
+                    silicon performance claims verified by independent benchmark reproducibility, team depth at the
+                    intersection of cryptographic engineering and chip design, and evidence of binding customer
+                    commitments from tier-1 ZK rollup operators sufficient to justify the capital intensity of ASIC
+                    production at scale.</p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand">Zenith Capital</div>
+                <div class="footer-addr">138 Robinson Road, #02-50 Oxley Tower, Singapore 068906</div>
+            </div>
+            <div class="footer-legal">Not an offer to sell securities. This research paper is produced by Zenith Capital
+                for informational purposes only. Past performance is not indicative of future results. All investment
+                activities carry risk, including the possible loss of principal.</div>
+        </div>
+    </footer>
+
+    <script>
+        const sections = document.querySelectorAll('.article-section');
+        const tocLinks = document.querySelectorAll('.toc-list a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+            tocLinks.forEach(a => { a.classList.remove('active'); if (a.getAttribute('href') === '#' + current) a.classList.add('active'); });
+        });
+    </script>
+</body>
+
+</html>

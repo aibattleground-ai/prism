@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Architecture of Deterministic Destiny Engines | Zenith Capital Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #050505;
+            --primary-light: #111111;
+            --accent: #CCFF00;
+            --white: #E5E5E5;
+            --grey: #888888;
+            --border: rgba(255, 255, 255, 0.07);
+            --toc-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--white);
+            line-height: 1.7;
+        }
+
+        /* ── Header ── */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 5, 0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 1.1rem 5%;
+        }
+
+        .header-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .header-logo span {
+            color: var(--accent);
+        }
+
+        .header-meta {
+            font-size: 0.78rem;
+            color: var(--grey);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* ── Layout ── */
+        .page-wrapper {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: var(--toc-width) 1fr;
+            gap: 0;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* ── TOC ── */
+        .toc-sidebar {
+            border-right: 1px solid var(--border);
+            padding: 3rem 2rem;
+            position: sticky;
+            top: 56px;
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+        }
+
+        .toc-label {
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.2rem;
+        }
+
+        .toc-list a {
+            color: var(--grey);
+            text-decoration: none;
+            font-size: 0.83rem;
+            line-height: 1.6;
+            display: block;
+            padding: 0.3rem 0.6rem;
+            border-left: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .toc-list a:hover,
+        .toc-list a.active {
+            color: var(--white);
+            border-left-color: var(--accent);
+            background: rgba(204, 255, 0, 0.04);
+        }
+
+        .toc-list .toc-sub {
+            padding-left: 1rem;
+            font-size: 0.78rem;
+        }
+
+        .toc-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 1.5rem 0;
+        }
+
+        .toc-meta-item {
+            font-size: 0.75rem;
+            color: var(--grey);
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-meta-item strong {
+            display: block;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.68rem;
+            margin-bottom: 0.15rem;
+        }
+
+        /* ── Article ── */
+        .article-main {
+            padding: 4rem 5rem;
+            max-width: 820px;
+        }
+
+        .article-kicker {
+            font-size: 0.78rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-byline {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 1.2rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+        }
+
+        .byline-item {
+            font-size: 0.8rem;
+            color: var(--grey);
+        }
+
+        .byline-item strong {
+            display: block;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .article-abstract {
+            background: rgba(204, 255, 0, 0.04);
+            border-left: 3px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+            color: rgba(229, 229, 229, 0.8);
+            line-height: 1.8;
+        }
+
+        .article-abstract strong {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 0.7rem;
+        }
+
+        .article-section {
+            margin-bottom: 3.5rem;
+            scroll-margin-top: 80px;
+        }
+
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-p {
+            font-size: 0.97rem;
+            color: rgba(229, 229, 229, 0.85);
+            line-height: 1.9;
+            margin-bottom: 1.4rem;
+        }
+
+        .inline-code {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.85em;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.1em 0.45em;
+            border-radius: 3px;
+            color: var(--accent);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.88rem;
+        }
+
+        .data-table th {
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.72rem;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(229, 229, 229, 0.8);
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .callout {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            color: var(--grey);
+            line-height: 1.8;
+        }
+
+        .callout-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 5%;
+            margin-top: 4rem;
+        }
+
+        .footer-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-addr {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.25);
+            margin-top: 0.3rem;
+            line-height: 1.6;
+        }
+
+        .footer-legal {
+            max-width: 600px;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.18);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 900px) {
+            .page-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .toc-sidebar {
+                display: none;
+            }
+
+            .article-main {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="header-logo">Zenith <span>Capital</span></a>
+            <div class="header-meta">Research &amp; Insights · Technical Paper</div>
+        </div>
+    </header>
+
+    <div class="page-wrapper">
+
+        <!-- Table of Contents -->
+        <aside class="toc-sidebar">
+            <span class="toc-label">Contents</span>
+            <ul class="toc-list">
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#s1">1. Introduction</a></li>
+                <li><a href="#s2">2. The Probabilistic Destiny Matrix</a></li>
+                <li><a href="#s3">3. OracleEyes Distributed Consensus</a></li>
+                <li><a href="#s3" class="toc-sub">3.1 Node Architecture</a></li>
+                <li><a href="#s3" class="toc-sub">3.2 Commit-Reveal Scheme</a></li>
+                <li><a href="#s4">4. Byzantine Fault Tolerance</a></li>
+                <li><a href="#s5">5. Cryptoeconomic Security</a></li>
+                <li><a href="#s6">6. Conclusion</a></li>
+            </ul>
+
+            <hr class="toc-divider">
+
+            <div class="toc-meta-item">
+                <strong>Published</strong>
+                February 2026
+            </div>
+            <div class="toc-meta-item">
+                <strong>Category</strong>
+                Technical Paper
+            </div>
+            <div class="toc-meta-item">
+                <strong>Authors</strong>
+                Zenith Capital Research
+            </div>
+            <div class="toc-meta-item">
+                <strong>Protocol</strong>
+                OracleEyes ($ORC)
+            </div>
+        </aside>
+
+        <!-- Main Article -->
+        <main class="article-main">
+
+            <div class="article-kicker">Technical Paper · February 2026</div>
+            <h1 class="article-title">The Architecture of Deterministic Destiny Engines: Analyzing OracleEyes' On-Chain
+                Consensus</h1>
+
+            <div class="article-byline">
+                <div class="byline-item"><strong>Authors</strong>Zenith Capital Research Team</div>
+                <div class="byline-item"><strong>Protocol</strong>OracleEyes ($ORC)</div>
+                <div class="byline-item"><strong>Version</strong>v1.2 — Pre-Mainnet</div>
+                <div class="byline-item"><strong>Classification</strong>Public Research</div>
+            </div>
+
+            <div class="article-abstract" id="abstract">
+                <strong>Abstract</strong>
+                We present a formal analysis of OracleEyes' on-chain consensus model for probabilistic outcome
+                finalization—what the protocol defines as a Deterministic Destiny Engine (DDE). Our evaluation
+                encompasses the cryptoeconomic security guarantees of its distributed oracle lattice, the
+                fault-tolerance properties of its modified Practical Byzantine Fault Tolerant (pBFT) implementation, and
+                the incentive-compatibility of its stochastic reward distribution mechanism. We conclude that the
+                architecture demonstrates sufficient security margins for adversarial environments with up to <span
+                    class="inline-code">f &lt; n/3</span> faulty nodes, contingent upon economic staking thresholds
+                exceeding 2.4× the maximum extractable incentive per epoch.
+            </div>
+
+            <!-- Section 1 -->
+            <section class="article-section" id="s1">
+                <h2 class="section-heading">1. Introduction</h2>
+                <p class="article-p">The emergence of on-chain prediction and outcome verification markets has
+                    introduced a novel class of protocol primitives that extend beyond classical oracle trilemma
+                    frameworks. Traditional oracle designs—characterized by request-response mechanisms, reputation
+                    staking, or aggregation-via-median—fail to address the deterministic finalization of multi-party
+                    probabilistic outcomes within a single block context. OracleEyes ($ORC) proposes a departure from
+                    these conventions through what it terms a <em>Deterministic Destiny Engine</em>: a distributed
+                    computation layer in which stakeholder consensus over a probabilistic outcome matrix produces a
+                    single, irrevocable, and cryptographically attested result.</p>
+                <p class="article-p">The fundamental challenge in designing such a system is reconciling the inherent
+                    non-determinism of probabilistic state machines with the strict determinism demanded by the EVM
+                    execution environment. OracleEyes resolves this through a three-phase commit-reveal-attest cycle
+                    nested within its validator epoch structure, wherein each participating node contributes an entropy
+                    fragment that is irreversibly combined via a Verifiable Random Function (VRF) at the epoch boundary,
+                    yielding a canonical destiny vector of fixed dimension <span class="inline-code">D ∈ ℤ₂⁵¹²</span>.
+                </p>
+                <p class="article-p">This paper proceeds as follows: Section 2 formalizes the Probabilistic Destiny
+                    Matrix (PDM) construction. Section 3 details the distributed node architecture and its consensus
+                    layer. Section 4 analyzes Byzantine fault tolerance properties. Section 5 evaluates cryptoeconomic
+                    security assumptions. Section 6 concludes with recommendations for mainnet parameter configuration.
+                </p>
+            </section>
+
+            <!-- Section 2 -->
+            <section class="article-section" id="s2">
+                <h2 class="section-heading">2. The Probabilistic Destiny Matrix</h2>
+                <p class="article-p">The Probabilistic Destiny Matrix (PDM) is OracleEyes' core data structure—a
+                    stochastic state representation encoding the superposition of all valid outcome trajectories for a
+                    given event space <span class="inline-code">Ω</span>. Formally, the PDM is defined as a sparse
+                    matrix <span class="inline-code">M ∈ ℝ^(k×k)</span> where each cell <span
+                        class="inline-code">M[i][j]</span> encodes the conditional transition probability from outcome
+                    state <span class="inline-code">ωᵢ</span> to <span class="inline-code">ωⱼ</span> given the current
+                    epoch's exogenous signal feed. This construction borrows concepts from quantum state tomography,
+                    applying the density matrix formalism to discrete event outcome spaces rather than quantum
+                    mechanical observables.</p>
+                <p class="article-p">The critical insight is that outcome finalization is not the selection of a single
+                    element from <span class="inline-code">Ω</span>, but rather the <em>projection</em> of the full PDM
+                    onto a preferred basis determined jointly by node consensus. This projection—referred to as the
+                    Destiny Collapse Operation (DCO)—is performed exactly once per epoch and produces an immutable
+                    destiny vector committed to the L1 state trie. The design ensures that no single validator controls
+                    the projection basis, as the basis vectors are themselves derived from the XOR-aggregation of
+                    individually signed VRF outputs, preventing any coordinated basis manipulation by colluding
+                    validators below the Byzantine threshold.</p>
+                <p class="article-p">A secondary invariant of the PDM architecture is outcome non-replayability. Each
+                    matrix element is salted with an epoch-specific nonce bound to the previous block hash via a Merkle
+                    commitment, making retrospective construction of any historically valid PDM computationally
+                    equivalent to breaking SHA-3 preimage resistance. This property is essential for preventing
+                    retroactive manipulation of finalized outcomes by well-resourced adversaries with privileged access
+                    to archival node state.</p>
+
+                <div class="callout">
+                    <div class="callout-title">Definition 2.1 — Destiny Collapse Operation</div>
+                    Let <code class="inline-code">B = {b₁, ..., bₙ}</code> be the set of VRF-derived basis vectors
+                    contributed by <code class="inline-code">n</code> validators, and let <code
+                        class="inline-code">M</code> be the current epoch PDM. The Destiny Collapse Operation is defined
+                    as <code class="inline-code">DCO(M, B) = argmax‖M · (⊕B)‖₂</code>, where <code
+                        class="inline-code">⊕</code> denotes bitwise XOR aggregation over the basis set. The result is a
+                    deterministic scalar index into the finalized outcome set.
+                </div>
+            </section>
+
+            <!-- Section 3 -->
+            <section class="article-section" id="s3">
+                <h2 class="section-heading">3. OracleEyes Distributed Node Architecture &amp; Consensus</h2>
+                <p class="article-p">The OracleEyes validator network is organized as a permissioned lattice of bonded
+                    node operators, each staking a minimum of <span class="inline-code">10,000 $ORC</span> to
+                    participate in the consensus protocol. The network operates in epochs of 128 blocks, during which
+                    each node must complete the three-phase protocol described below. Node selection for each epoch is
+                    governed by a verifiable pseudorandom function parameterized by the previous epoch's destiny vector,
+                    creating a recursive dependency structure that binds validator selection to prior consensus output—a
+                    design choice that dramatically raises the cost of long-range attacks.</p>
+                <p class="article-p">The consensus layer implements a modified variant of pBFT optimized for the
+                    asynchronous broadcast environment of EVM-compatible chains. Standard pBFT requires <span
+                        class="inline-code">O(n²)</span> message complexity for the prepare and commit phases, which is
+                    prohibitive at scale. OracleEyes replaces the all-to-all broadcast with a threshold BLS signature
+                    aggregation scheme, reducing communication overhead to <span class="inline-code">O(n log n)</span>
+                    while preserving the safety guarantees of the original protocol. Aggregated signatures are verified
+                    on-chain by the <span class="inline-code">OracleRegistry</span> smart contract via the EIP-2537
+                    BLS12-381 precompile.</p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Action</th>
+                            <th>On-Chain</th>
+                            <th>Complexity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1 — Commit</td>
+                            <td>Validator submits H(entropy ∥ nonce)</td>
+                            <td>Yes</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td>2 — Reveal</td>
+                            <td>Validator reveals entropy + VRF proof</td>
+                            <td>Yes</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td>3 — Attest</td>
+                            <td>BLS aggregate signature over DCO result</td>
+                            <td>Yes</td>
+                            <td>O(n log n)</td>
+                        </tr>
+                        <tr>
+                            <td>Finalize</td>
+                            <td>OracleRegistry commits destiny vector</td>
+                            <td>Yes</td>
+                            <td>O(1)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 4 -->
+            <section class="article-section" id="s4">
+                <h2 class="section-heading">4. Byzantine Fault Tolerance Analysis</h2>
+                <p class="article-p">Classical Byzantine Fault Tolerance theory establishes that a distributed system
+                    with <span class="inline-code">n</span> participants can tolerate up to <span class="inline-code">f
+                        &lt; n/3</span> Byzantine (arbitrarily malicious) nodes while preserving both safety and
+                    liveness. OracleEyes' modified pBFT inherits this bound, with one critical qualification: the
+                    system's safety property holds unconditionally, while liveness is guaranteed only under a partial
+                    synchrony assumption—specifically, that any message transmitted between honest nodes is delivered
+                    within a bounded delay <span class="inline-code">Δ</span> after an unknown stabilization time <span
+                        class="inline-code">GST</span>.</p>
+                <p class="article-p">In the context of OracleEyes, Byzantine behavior encompasses not only conventional
+                    equivocation (signing conflicting messages for the same epoch) but also <em>bias attacks</em>,
+                    wherein a colluding coalition of validators attempts to steer the XOR-aggregated basis vector toward
+                    a pre-determined target. Our analysis demonstrates that the probability of a successful bias attack
+                    by a coalition controlling <span class="inline-code">m</span> of <span class="inline-code">n</span>
+                    validators is bounded above by <span class="inline-code">2^(−(n−m)·λ)</span> where <span
+                        class="inline-code">λ</span> is the VRF security parameter (128 bits in the current
+                    implementation). For a network of 50 validators with 16 colluders, this reduces to a negligible
+                    <span class="inline-code">2^(−4352)</span> per epoch.</p>
+                <p class="article-p">We further identify a novel attack vector specific to the DCO's basis projection
+                    mechanism, which we term the <em>Projection Alignment Attack (PAA)</em>. In a PAA, an adversary with
+                    knowledge of the current PDM state attempts to submit VRF outputs that, when XOR-aggregated with
+                    honest contributions, align the projection basis with a target outcome column. Our formal analysis
+                    proves that PAA success probability is bounded by a negligible function of the security parameter
+                    under the assumption that the VRF construction satisfies pseudorandomness, which holds under the
+                    ECVRF-EDWARDS25519-SHA512-TAI specification used by OracleEyes.</p>
+            </section>
+
+            <!-- Section 5 -->
+            <section class="article-section" id="s5">
+                <h2 class="section-heading">5. Cryptoeconomic Security Analysis</h2>
+                <p class="article-p">Beyond formal security guarantees, the practical security of OracleEyes depends
+                    critically on the economic rationality of its validator incentive structure. The protocol's
+                    slash-and-reward mechanism is designed such that the expected reward from honest participation
+                    strictly dominates the expected payoff from any deviation, a property we formalize as <em>incentive
+                        compatibility in the dominant strategy equilibrium</em>. Validators who fail to reveal their
+                    committed entropy within the reveal window are slashed 5% of their bonded stake; validators who
+                    submit provably invalid VRF proofs are slashed 100% and permanently blacklisted from the operator
+                    registry.</p>
+                <p class="article-p">The staking economics impose a minimum network security budget of <span
+                        class="inline-code">S = n · stake_min · token_price</span>. For OracleEyes to remain
+                    economically secure, this budget must exceed 2.4× the maximum value attributable to any single
+                    epoch's destiny vector output—a threshold we derive from a worst-case MEV analysis of the protocol's
+                    downstream settlement contracts. At current parameters (<span class="inline-code">n=50</span>, <span
+                        class="inline-code">stake_min=10,000 $ORC</span>), the security budget stands at approximately
+                    $6.2M USD at a conservative ORC price of $12.40, comfortably exceeding the estimated maximum epoch
+                    MEV of $1.8M across all integrated settlement venues.</p>
+                <p class="article-p">Our simulation of validator churn scenarios indicates that the protocol maintains
+                    security margins above the 2.4× threshold as long as network stake utilization exceeds 62%. We
+                    recommend the protocol governance implement a dynamic stake adjustment mechanism that automatically
+                    raises the minimum stake requirement proportionally to the estimated epoch MEV, ensuring that
+                    economic security scales with protocol adoption rather than remaining fixed at a static parameter
+                    that may become inadequate as the platform matures and total value locked increases.</p>
+            </section>
+
+            <!-- Section 6 -->
+            <section class="article-section" id="s6">
+                <h2 class="section-heading">6. Conclusion</h2>
+                <p class="article-p">OracleEyes' Deterministic Destiny Engine represents a technically rigorous and
+                    architecturally novel approach to on-chain outcome finalization. The combination of probabilistic
+                    state representation via the PDM, entropy-based VRF aggregation for the Destiny Collapse Operation,
+                    and BLS-optimized pBFT consensus yields a system with strong formal security guarantees under
+                    standard cryptographic assumptions. Our analysis identifies the protocol as ready for controlled
+                    mainnet deployment, with the caveat that dynamic staking adjustments should be implemented prior to
+                    significant TVL growth in downstream settlement infrastructure.</p>
+                <p class="article-p">Zenith Capital participated in the OracleEyes strategic SAFT round and maintains a
+                    position in $ORC. This paper reflects independent technical due diligence conducted by the Zenith
+                    Research team and should not be construed as an investment recommendation. All protocol parameters
+                    cited herein are drawn from the v1.2 pre-mainnet specification and are subject to change by protocol
+                    governance.</p>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand">Zenith Capital</div>
+                <div class="footer-addr">138 Robinson Road, #02-50 Oxley Tower, Singapore 068906</div>
+            </div>
+            <div class="footer-legal">
+                Not an offer to sell securities. This research paper is produced by Zenith Capital for informational
+                purposes only. Past performance is not indicative of future results. All investment activities carry
+                risk, including the possible loss of principal.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Active TOC link on scroll
+        const sections = document.querySelectorAll('.article-section');
+        const tocLinks = document.querySelectorAll('.toc-list a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => {
+                if (window.scrollY >= s.offsetTop - 100) current = s.id;
+            });
+            tocLinks.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
