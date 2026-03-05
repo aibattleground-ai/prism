@@ -1341,12 +1341,18 @@
 
         .partners-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 2.5rem;
             margin-top: 4rem;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            .partners-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
             .partners-grid {
                 grid-template-columns: 1fr;
             }
@@ -1370,23 +1376,56 @@
         }
 
         .partner-avatar {
-            width: 110px;
-            height: 110px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            background: linear-gradient(135deg, #1c1c1c 0%, #2e2e2e 100%);
+            border: 2px solid rgba(255, 255, 255, 0.10);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             position: relative;
-            filter: grayscale(1);
+            flex-shrink: 0;
         }
 
         .partner-avatar svg {
             width: 56px;
             height: 56px;
-            opacity: 0.35;
+            opacity: 0.28;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .partner-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            filter: grayscale(0.2) contrast(1.05);
+            display: block;
+        }
+
+        .partner-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--grey);
+            text-decoration: none;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .partner-email:hover {
+            color: var(--accent);
+        }
+
+        .partner-email svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
         }
 
         .partner-name {
@@ -2190,13 +2229,32 @@
                 </p>
             </div>
             <div class="partners-grid">
-                <!-- Partner 1 -->
+                <!-- Jonathan Wei — Managing Director -->
                 <div class="partner-card reveal">
                     <div class="partner-avatar">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <!-- Intentional premium placeholder -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
                             <circle cx="12" cy="8" r="4" />
                             <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                         </svg>
+                    </div>
+                    <div class="partner-name">Jonathan Wei</div>
+                    <div class="partner-creds">
+                        <span class="partner-cred">ex-Goldman Sachs Securities</span>
+                        <span class="partner-cred">Strategic Advisor to Tier-1 Exchanges</span>
+                    </div>
+                    <a href="mailto:jonathan.wei@zenithcapital.com" class="partner-email" aria-label="Email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <path d="M22 6 12 13 2 6" />
+                        </svg>
+                        Email
+                    </a>
+                </div>
+                <!-- Alexander Vance -->
+                <div class="partner-card reveal">
+                    <div class="partner-avatar">
+                        <img src="Gemini_Generated_Image_96y1eu96y1eu96y1.jpeg" alt="Alexander Vance">
                     </div>
                     <div class="partner-name">Alexander Vance</div>
                     <div class="partner-creds">
@@ -2211,13 +2269,10 @@
                         LinkedIn
                     </a>
                 </div>
-                <!-- Partner 2 -->
+                <!-- Julian Hayes -->
                 <div class="partner-card reveal">
                     <div class="partner-avatar">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <circle cx="12" cy="8" r="4" />
-                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                        </svg>
+                        <img src="Gemini_Generated_Image_okr2acokr2acokr2.jpeg" alt="Julian Hayes">
                     </div>
                     <div class="partner-name">Julian Hayes</div>
                     <div class="partner-creds">
